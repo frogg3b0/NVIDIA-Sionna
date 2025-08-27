@@ -69,7 +69,7 @@ sn.phy.config.seed = 42
 
 ## OFDM Resource Grid and Stream Management
 接著要在 User 和 Basestation 之間建立一條 SIMO point-to-point link ，系統流程如下  
-<img width="556" height="243" alt="image" src="https://github.com/user-attachments/assets/c6f62071-5843-4cb3-aa08-25689a7081e5" />
+<img width="568" height="265" alt="image" src="https://github.com/user-attachments/assets/bdd42c2a-3ff2-47e0-8361-97c694a36ace" />
 
 ***
 
@@ -128,7 +128,8 @@ RESOURCE_GRID = sn.phy.ofdm.ResourceGrid(num_ofdm_symbols=14,                   
                                          pilot_ofdm_symbol_indices=[2,11])         # 在第 2 與第 11 個 OFDM symbol 插入 pilot OFDM symbol
 RESOURCE_GRID.show();   # 繪製上述的 OFDM ResourceGrid               
 ```
-<img width="606" height="440" alt="image" src="https://github.com/user-attachments/assets/09ca86d9-4b66-49c9-bf99-22e025bede77" />
+<img width="605" height="455" alt="image" src="https://github.com/user-attachments/assets/9d01fa4a-3214-46d3-b4f1-c8c2ec032f53" />
+
 
 ***
 
@@ -161,7 +162,11 @@ BS_ARRAY = sn.phy.channel.tr38901.AntennaArray(num_rows=1,                      
 UT_ARRAY.show();
 BS_ARRAY.show();
 ```
-<img width="595" height="908" alt="image" src="https://github.com/user-attachments/assets/530b6a7b-8aa1-413a-a0bc-bc04078177a8" />  
+<img width="587" height="455" alt="image" src="https://github.com/user-attachments/assets/07b1e739-82cb-48d1-a2cb-d9b4c487ec37" />
+<img width="589" height="455" alt="image" src="https://github.com/user-attachments/assets/343f7e32-1f3e-41e3-a76d-0aed70a192ca" />
+
+
+
 
 * 上圖為 UT_ARRAY: 對應到單一天線垂直極化
 * 下圖為 BS_ARRAY: 陣列上有兩個物理位置；每個位置上放置兩根互相垂直的天線，所以天線數量=4。並且間距為5.77cm=λ/2
@@ -182,7 +187,8 @@ Sionna 支援多種通道模型，這些模型來自 [3GPP TR 38.901](https://po
 
 ### 首先考慮3GPP CDL model
 point-to-point流程如下  
-<img width="569" height="246" alt="image" src="https://github.com/user-attachments/assets/137692ab-d05f-4343-808a-5ea5a4fc56db" />  
+<img width="569" height="246" alt="image" src="https://github.com/user-attachments/assets/a293633c-2dc3-4c43-8d80-7ee17a70adb1" />
+
 
 ```python
 DELAY_SPREAD = 100e-9                               # 訊號因多路徑，到達接收端時間差異的分布              
@@ -222,10 +228,12 @@ a, tau = CDL(batch_size=BATCH_SIZE,
 * 隨時間改變的是：每一條路徑的複數衰減係數 𝑎𝑙(𝑡)，它是 time-varying
 
 #### <在某個時間點t=定值，其對應的多條路徑CIR，即 ℎ(𝑡=定值, 𝜏)>
-<img width="591" height="451" alt="image" src="https://github.com/user-attachments/assets/9c7c1f4f-6230-4064-9c5b-1a719cba450a" />  
+<img width="580" height="457" alt="image" src="https://github.com/user-attachments/assets/c2b85ef0-5de1-4a64-b336-1ed596c1d0e7" />
+
 
 #### <某一條路徑𝜏=定值，隨著不同時間點的gain，即 ℎ(𝑡, 𝜏=定值)>
-<img width="571" height="448" alt="image" src="https://github.com/user-attachments/assets/5adc61c2-d89b-4ffe-974f-57f16b8e447f" />
+<img width="576" height="457" alt="image" src="https://github.com/user-attachments/assets/4a1df765-aca0-4c98-85e1-10ccd06c99cc" />
+
 
 ***
 
@@ -334,7 +342,8 @@ Shape of bits_hat:  (128, 1, 1, 912)
 
 ### 定義一個可重複模擬 OFDM 傳輸系統的模型類別
 包含發送端、通道、接收端（含 LS 或 perfect CSI），並能在呼叫時自動模擬一整個 batch 的 bit 傳輸與解碼  
-<img width="737" height="485" alt="image" src="https://github.com/user-attachments/assets/579031e0-5efd-434b-853d-47f37ab4d5a2" />  
+<img width="737" height="485" alt="image" src="https://github.com/user-attachments/assets/8c0f4204-6364-4729-98aa-588cb44fcff0" />
+
 
 ```python
 model = OFDMSystem(perfect_csi=True)
@@ -409,4 +418,5 @@ class OFDMSystem(Model): # Inherits from Keras Model
 #### 如何使用這個 class
 1. 定義系統: `model = OFDMSystem(perfect_csi=True)`
 2. 呼叫主程式，並輸入參數 `batch_size, ebno_db`，這會自動呼叫 __call__()，完成：bit → 編碼 → QAM → OFDM → 通道 → 等化 → 解調 → 解碼
-<img width="1368" height="900" alt="image" src="https://github.com/user-attachments/assets/276b20ad-bc69-42ea-8499-acd61535ea02" />
+<img width="1368" height="900" alt="image" src="https://github.com/user-attachments/assets/fbbfecb4-507a-4d32-bbdc-931f0f58e81e" />
+
