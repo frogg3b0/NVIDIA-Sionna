@@ -101,7 +101,7 @@
 ### 建模流程
 #### 整個建模流程分為三個部分：
 #### 這三個流程又可細分為16個步驟
-<img width="600" height="482" alt="image" src="https://github.com/user-attachments/assets/8ede7f27-2342-4139-89a9-36be1ff0943a" />
+<img width="512" height="212" alt="image" src="https://github.com/user-attachments/assets/f766c294-4422-4161-91f9-cb5ce8179f21" />
 
 * 藍色方框: 這些步驟是 NTN（非地面網路）專有的；或是與3GPP TR38.901 中定義的地面通道模型產生有顯著差異
 * 紅色方框: 這些步驟和地面模擬中的做法幾乎一樣
@@ -116,7 +116,8 @@
     * 在「高密度都會區」（dense urban）中，使用者間距離較近
     * 在「郊區」（suburban）中，距離則較遠
 * UT 與衛星間的距離依賴於「仰角」與「衛星高度」，而 UT 的方向為隨機設定，而衛星則始終朝向地球表面正下方
-<img width="400" height="353" alt="image" src="https://github.com/user-attachments/assets/c8cd8933-30ad-46ce-a240-6d2619cfcc76" />
+
+<img width="281" height="246" alt="image" src="https://github.com/user-attachments/assets/abc4a8ac-abb4-409a-a953-c9d7a92a3aff" />
 
 ***
 
@@ -125,7 +126,9 @@
 
 ##### 可用的 Satellite Antenna 如下:  
 1. Reflector antenna with a circular aperture
-<img width="343" height="79" alt="image" src="https://github.com/user-attachments/assets/15555cf0-775b-49f4-a21a-673c487a8333" />
+
+<img width="512" height="124" alt="image" src="https://github.com/user-attachments/assets/a0434508-333b-4c6f-bd13-38fe951b6043" />
+
 這是一個以「圓形反射面天線」為基礎的 Airy Pattern，依據 TR38.811 定義
 * θ： 與主波束方向（boresight）之間的夾角，0 度表示正中央。
 * 𝑎： 天線孔徑（aperture）半徑。
@@ -144,7 +147,9 @@
 #### 3) Propagation Condition
 每個使用者端會被指定為「 LOS」或「 NLOS」狀態  
 * 每個狀態（LOS 或 NLOS）的機率，是根據場景與仰角 𝜃 決定的 [(參考 3GPP 38.811 version 15.4.0 6.6.1-1)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3234)
-<img width="854" height="426" alt="image" src="https://github.com/user-attachments/assets/04ee9a0f-5cd4-4457-b99e-112c0d8138ba" />
+
+<img width="614" height="269" alt="image" src="https://github.com/user-attachments/assets/0493cf42-87b6-47ff-9f3e-cb438bf85134" />
+
 
 * 與地面模擬不同，衛星模擬中不考慮室內通訊情況
 
@@ -176,8 +181,8 @@
 * 到達仰角（ZOA）
 * 發射仰角（ZOD）
 * Rician factor 𝐾
+
 這些參數的分布是[參考3GPP 38.811 version 15.4.0 6.7.2)](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3234)
-初始抽樣後，這些參數會透過一個交叉相關矩陣進行相關性建模
 
 ***  
 
@@ -190,7 +195,8 @@
     * 產生 𝑚 個 cluster
         * 每個 cluster 中包含 𝑛 條 ray
     * 所有在同一時刻抵達接收端的 ray，會被歸為一個 path
-  <img width="343" height="279" alt="image" src="https://github.com/user-attachments/assets/37c25352-e8b9-4a68-9b53-a256edbb3891" />
+
+<img width="347" height="354" alt="image" src="https://github.com/user-attachments/assets/24442a4e-9ee5-4bcc-9aa5-9819a0739656" />
 
 #### 1) Cluster Delays:
 對每對發射器與接收器產生 𝑚 個 cluster，每個cluster會產生一個基礎延遲
@@ -248,7 +254,8 @@ Cross Polarization: 「發射」與「接收」的波在正交極化下，所遭
 3. 拓撲定義: 定義用戶數、位置、高度、速度，以及衛星高度
 4. 通道係數模型建立: 計算 CIR 中的每條 ray（功率、角度、多普勒、相位等）
 Fig. 4 展示了使用此框架的各個步驟與所需的參數類型
-<img width="604" height="362" alt="image" src="https://github.com/user-attachments/assets/15f26f7d-d5bc-4f51-b328-bdfa2dabd5c8" />
+
+<img width="604" height="350" alt="image" src="https://github.com/user-attachments/assets/6c7762b6-6d82-40b7-9af7-ca638eacdefe" />
 
 * 通道模型產生後，會導出通道衝激響應（CIR），可用來產生所需的通道
 * Sionna™ 框架已內建函式，可將 CIR 轉為 OFDM 時域通道或頻域通道，兩者都需搭配 `resource grid` 使用 (可參考Sionna PYH)
