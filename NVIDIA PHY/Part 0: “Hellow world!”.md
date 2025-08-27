@@ -60,7 +60,9 @@ constellation = sionna.phy.mapping.Constellation("qam", num_bits_per_symbol)
 constellation.show();
 ```
 * `sionna.phy.mapping.Constellation("調變方式",bit/symbol)`: 代表星座圖使用 QAM ，並且每個 symbol 由 4-bit 組成，因此為 16-QAM
-<img width="621" height="624" alt="image" src="https://github.com/user-attachments/assets/cf9b06a6-aa9f-476c-ba55-16e7a1b7f8f7" />
+
+<img width="621" height="624" alt="image" src="https://github.com/user-attachments/assets/ee84a648-d24e-44a2-9ea2-054ea3f12d84" />
+
 
 ## Step 3. 根據先前建立的星座圖，
 產生bit vector -> 建立星座圖 -> **將 bit vector mapping 到星座圖上**  
@@ -107,4 +109,5 @@ plt.ylabel("Imaginary Part")
 plt.grid(True, which="both", axis="both")
 plt.title("Received Symbols");
 ```
-<img width="612" height="624" alt="image" src="https://github.com/user-attachments/assets/6eb7153e-502a-4c1c-9ae9-608aa24bbde6" />
+<img width="612" height="624" alt="image" src="https://github.com/user-attachments/assets/9dd07beb-4f50-49bd-92e0-d4d9ecc833d5" />
+
