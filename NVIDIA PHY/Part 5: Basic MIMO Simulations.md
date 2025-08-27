@@ -1,7 +1,8 @@
 # Part 5: Basic MIMO Simulations
 * 在本篇中，您將學習如何設定 **flat fading channel**上的 MIMO 傳輸模擬  
 * 以下是包含所有必要組件的系統模型示意圖
-<img width="650" height="400" alt="image" src="https://github.com/user-attachments/assets/308105ac-3530-49a1-99f9-ffed1601c0f8" />
+<img width="650" height="400" alt="image" src="https://github.com/user-attachments/assets/22050d13-9f74-4704-b23d-e3264a02e6a2" />
+
 
 在本章內容，您會學習如何: 
 * 使用 `FastFadingChannel` class
@@ -126,7 +127,9 @@ plt.scatter(np.real(x), np.imag(x));
 假設你接收到一個點在「(2.7 + j0.9)」附近
 * 如果是 Hard symbol：你會直接判成 (3 + j1)，然後對應 bit pattern
 * 如果是 Soft symbol：你會保留「2.7 + j0.9」這個值，讓解碼器根據這個距離來決定 bit 的機率
-<img width="436" height="413" alt="image" src="https://github.com/user-attachments/assets/c6199341-0647-4210-bbd2-1f47501aab23" />
+
+<img width="436" height="413" alt="image" src="https://github.com/user-attachments/assets/14d6ad86-ec15-4c4d-8a97-b2ec81063b5a" />
+
 
 如上圖所示  
 * soft symbol `x_hat`分散在 16-QAM 星座點周圍
@@ -315,4 +318,5 @@ class Model(Block):
 
         return b,  b_hat
 ```
-<img width="658" height="421" alt="image" src="https://github.com/user-attachments/assets/22a44c9d-94ca-4297-9ddc-2f2a5ea1a308" />
+<img width="1368" height="900" alt="image" src="https://github.com/user-attachments/assets/5a6c390f-faf2-4f25-a1ee-13ab59feba27" />
+
