@@ -154,7 +154,8 @@ ber_plots.simulate(model_uncoded_awgn,
 * `max_mc_iter=100`: 最多進行 100 輪蒙地卡羅模擬
 * `show_fig=True` :是否畫出 BER 曲線圖，True
 接著，Sionna會印出每個 Eb/N₀ 的 BER 與 BLER的表格，同時產生 AWGN & Eb/N0 圖表
-<img width="657" height="425" alt="image" src="https://github.com/user-attachments/assets/51d3208e-41d3-4bf7-936c-da51743a240d" />
+<img width="1367" height="900" alt="image" src="https://github.com/user-attachments/assets/61676774-c643-4b0a-b7b5-3849b5c8a393" />
+
 
 ***
 
