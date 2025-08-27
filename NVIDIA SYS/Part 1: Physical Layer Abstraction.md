@@ -18,7 +18,8 @@
 * 針對每個使用者的每條 stream 對應的 SINR 做彙總（aggregation），合併為一個單一的 等效 SINR
 * 使用 Sionna PHY 的前向糾錯 (FEC) 模組中**預先計算的表**，將有效 SINR 值對應到傳輸區塊誤碼率 (TBLER)
 * 此方法能夠快速計算每個用戶的**傳輸速率**和 **HARQ feedback**，**使系統級模擬能夠擴展到數十個基地台和數百個用戶**  
-<img width="2534" height="545" alt="image" src="https://github.com/user-attachments/assets/cdb81c13-52ce-4be8-8d45-075b19606067" />
+<img width="2534" height="545" alt="image" src="https://github.com/user-attachments/assets/365b2882-d323-4589-9daa-a69a7019ebbc" />
+
 
 ***
 
@@ -117,8 +118,9 @@ _ = phy_abs.plot(plot_subset={
 這段程式碼會載入 `PHYAbstraction` 的資料表
 * 然後選出你指定的 uplink MCS 組合
 * 畫出對應的 BLER vs. SINR 曲線圖
-<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/227be785-92e6-40d0-be83-0084f25f41f3" />
-<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/d0196519-8f5a-4b64-9bc0-d0d1170a2959" />
+<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/77c8136b-3a92-4044-9e8d-27ace8c6de5b" />
+<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/88f771f8-98ab-43fc-9afe-3cac51e182ee" />
+
 
 ***
 
@@ -197,7 +199,8 @@ phy_abs.plot(plot_subset=sim_set,
 * 針對 3 種 Code Block Size：24、200、3000
 * 針對 25 個 SNR（EbNo）點，範圍從 5 到 25 dB
 
-<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/6b7eecb0-b5d7-4ca5-9be5-4b297c09cc68" />
+<img width="578" height="455" alt="image" src="https://github.com/user-attachments/assets/54ec3059-e5e2-4c5d-ae73-c762c4b0f97d" />
+
 
 當你執行 `phy_abs.new_bler_table(...)` 時，模擬結果會自動覆蓋到 `phy_abs.bler_table` 的對應位置
 另外，我們可以透過下面的 code，手動觀察、繪圖、分析這份結果
@@ -368,7 +371,8 @@ ax.grid()
 ax.legend(framealpha=1)
 plt.show()
 ```
-<img width="574" height="455" alt="image" src="https://github.com/user-attachments/assets/ace68579-edf6-4f9c-868a-2e67d30622f5" />
+<img width="574" height="455" alt="image" src="https://github.com/user-attachments/assets/8c77aeed-d06d-44fc-994e-999d715eba6e" />
+
 
 * 當 channel 很好時（右邊的 user），per-stream SINR 有些很高，但 effective SINR 會因為公式中使用指數平均而拉低
 * 當 channel 很差時（左邊 user），per-stream SINR 本來就低，這時候 Effective SINR ≈ 平均 SINR
@@ -421,7 +425,8 @@ ax.grid()
 fig.tight_layout()
 plt.show()
 ```
-<img width="490" height="390" alt="image" src="https://github.com/user-attachments/assets/779ea3fe-3f07-41ed-a8b8-3e8bdc76af44" />  
+<img width="490" height="390" alt="image" src="https://github.com/user-attachments/assets/ef9a3ae8-1e89-4964-be81-d0a01588fc02" />
+
 
 * 可以看到，實際達成的頻譜效率明顯低於Shannon capacity
     * 當 SINR 很差時，為了保證封包錯誤率低於某個門檻（例如 10%），系統會選擇比較保守的 MCS，也就是低速率導致頻譜效率被犧牲
