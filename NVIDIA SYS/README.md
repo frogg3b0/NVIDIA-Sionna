@@ -1,7 +1,8 @@
 # System Level (SYS)
 * 這個模組支援可微分的系統層級模擬，這在深度學習或神經網路共同設計通訊系統時非常關鍵，因為它允許使用者透過反向傳播調整參數
 * 支援多小區網路（multi-cell networks），也就是可模擬一個基地台不只一座的情境，模擬多個基地台之間的干擾與合作行為
-<img width="2085" height="1100" alt="image" src="https://github.com/user-attachments/assets/36203c3a-3da4-4998-be54-6ea564e586c6" />
+![Uploading image.png…]()
+
 
 ## Introduction
 * SYS 模組是基於物理層抽象模型所建構
