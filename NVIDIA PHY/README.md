@@ -45,32 +45,35 @@
 
 ### Sionna PYH 實作範例
 #### 範例1: QAM symbols over an AWGN channel (Part 1)
-<img width="656" height="692" alt="image" src="https://github.com/user-attachments/assets/9fd23b85-f429-4e0d-8456-c12e9889ab95" />  
+<img width="738" height="790" alt="image" src="https://github.com/user-attachments/assets/8f9e3728-8de8-4f05-9df6-c0041e036aca" />
+ 
 
 ***
 
 #### 範例2: 使用 5G Polor/LDCP 的 encoder/decoder (Part 1)
-<img width="622" height="165" alt="image" src="https://github.com/user-attachments/assets/241a089f-b0ab-4ef5-9cfa-16e63d44f09e" />   
-<img width="651" height="424" alt="image" src="https://github.com/user-attachments/assets/e5b5b3a3-e2d6-4cf3-9cdb-33255d57dfca" />  
+<img width="617" height="173" alt="image" src="https://github.com/user-attachments/assets/12769ebb-3014-40da-9cc6-bc2950a5b2df" />
+   
+<img width="1367" height="900" alt="image" src="https://github.com/user-attachments/assets/461863ee-5671-4ee6-9856-57a6de1e166d" />
+
 
 ***
 
 ### 範例3: OFDM Resource Grid (Part 3)
-<img width="563" height="240" alt="image" src="https://github.com/user-attachments/assets/0e245ef2-f02c-4859-b439-c75398ef4d02" />  
-<img width="607" height="438" alt="image" src="https://github.com/user-attachments/assets/efc460fd-af96-41ae-a4cd-9d75f063063e" />  
+<img width="568" height="265" alt="image" src="https://github.com/user-attachments/assets/e259685e-02dc-47c5-ae97-c6da3850b313" />
+<img width="605" height="455" alt="image" src="https://github.com/user-attachments/assets/7640e154-2577-4c9c-8458-0b63076beca4" />
 
 ***
 
 ### 範例4: 使用 3GPP model (Part 3)
-<img width="563" height="243" alt="image" src="https://github.com/user-attachments/assets/6d1b4a7d-38fa-448a-a9f0-f1d4503eb2ab" />  
-<img width="584" height="450" alt="image" src="https://github.com/user-attachments/assets/bf4abb68-e7f9-44b3-89fb-e5ca029ac7cd" />  
-<img width="650" height="430" alt="image" src="https://github.com/user-attachments/assets/0fadb0ad-1075-49af-83d4-fd832ac3550d" />
-
+<img width="737" height="485" alt="image" src="https://github.com/user-attachments/assets/11f616fa-3e5c-4ade-a7a1-77486e243110" />
+<img width="1368" height="900" alt="image" src="https://github.com/user-attachments/assets/9c4c83d7-0079-42e4-a6d9-a615b8a02a7e" />
 
 ***
 
 ### 範例5: Implemention of an Advanced Neural Receiver (Part 4)
-<img width="677" height="162" alt="image" src="https://github.com/user-attachments/assets/fef2b27d-fe5f-475a-a9f1-742e380da3ac" />
-<img width="694" height="602" alt="image" src="https://github.com/user-attachments/assets/afcdd2bc-b72d-4b0e-8917-42b78a43c1ba" /> 
-<img width="669" height="428" alt="image" src="https://github.com/user-attachments/assets/c3792799-8b51-4a6a-969b-c318f6a286bc" />
+<img width="1782" height="522" alt="image" src="https://github.com/user-attachments/assets/4b7f7834-a7ff-4269-a259-831156d5ae98" />
+<img width="739" height="658" alt="image" src="https://github.com/user-attachments/assets/58f9dbf0-dd88-47be-a4c1-49a016c9c42c" />
+<img width="1368" height="900" alt="image" src="https://github.com/user-attachments/assets/03861bc9-ba06-49ef-9c99-7343c48995e3" />
+
+
 
