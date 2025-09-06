@@ -223,6 +223,8 @@ p_solver = PathSolver()
 ```
 * 建立一個 路徑求解器實例，並把它命名成`p_solver`(它可以被重複使用)
 
+***
+
 ### Part 4 — 呼叫該 PathSolver，把要求解的環境輸入進去
 ```python
 paths = p_solver(
@@ -249,3 +251,56 @@ paths = p_solver(
 最終的輸出`path`，包含發射器和接收器之間的所有路徑
 * 這些路徑是deterministic
 * 因為`diffuse_reflection`是隨機抽樣方向，因此可固定某個`seed`確保每次模擬可重現
+
+***
+
+### Part 5 — 把剛剛場景輸出的path可視化出來
+```python
+if no_preview:
+    scene.render(camera=my_cam, paths=paths, clip_at=20);
+else:
+    scene.preview(paths=paths, clip_at=20);
+```
+
+* `no_preview = True`： 輸出靜態渲染圖像
+    * 使用 `my_cam` 指定的 camera 視角
+    * `paths=paths`： 把 ray tracing 得到的 propagation paths 畫出來（射線路徑可視化）
+    * `clip_at=20`： 表示只畫 20 公尺以內 的 propagation paths
+    
+* `no_preview = False`： 使用互動式 3D 預覽視窗
+
+<img width="766" height="590" alt="image" src="https://github.com/user-attachments/assets/a3b61e7b-517e-452b-ba8a-a406e21ac549" />
+
+***
+
+## From Paths to Channel Impulse and Frequency Responses
+這段是在講：如何將 ray tracing 得到的多徑 paths，轉換成可以用於通訊系統模擬的 baseband 通道響應資訊（CIR / CFR）  
+
+你已經從 PathSolver 得到 propagation paths，接下來的目標是：  
+* `paths.cir`: 模擬 channel impulse response（連續時間 baseband）
+* `paths.taps`	: 離散化後的 CIR（可對應 OFDM tap）
+* `paths.cfr`: 頻域通道響應（例如 OFDM subcarrier 頻率響應）
+
+***
+### 1. 產生 CIR（Continuous-Time, Baseband-Equivalent）
+
+```python
+a, tau = paths.cir(normalize_delays=True, out_type="numpy")
+
+# Shape: [num_rx, num_rx_ant, num_tx, num_tx_ant, num_paths, num_time_steps]
+print("Shape of a: ", a.shape)
+
+# Shape: [num_rx, num_rx_ant, num_tx, num_tx_ant, num_paths]
+print("Shape of tau: ", tau.shape)
+```
+
+```python
+Shape of a:  (1, 2, 1, 1, 20, 1)
+Shape of tau:  (1, 2, 1, 1, 20)
+```
+* `paths.cir(...)`: 將 ray tracing 的結果轉換為 基頻等效的 CIR
+    * `normalize_delays=True`: 讓最早一條 path 的 delay = 0
+    * `out_type="numpy"`: 輸出格式指定為 Numpy
+* 輸出：
+    * `a`： `每個 path 的複數振幅（包含衰減、相位、極化等）
+    * `tau`： 每個 path 的時延（以秒為單位）
