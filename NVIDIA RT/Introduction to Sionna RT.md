@@ -1,2 +1,0 @@
-# Introduction to Sionna RT
-
