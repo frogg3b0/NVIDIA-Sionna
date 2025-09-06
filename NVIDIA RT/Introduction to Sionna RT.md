@@ -274,15 +274,31 @@ else:
 ***
 
 ## From Paths to Channel Impulse and Frequency Responses
-這段是在講：如何將 ray tracing 得到的多徑 paths，轉換成可以用於通訊系統模擬的 baseband 通道響應資訊（CIR / CFR）  
+### `路徑名稱.cir()`、`路徑名稱.cfr()`、`路徑名稱.tap()`
+這段是在講：如何將 ray tracing 得到的多徑 `paths`，轉換成可以用於通訊系統模擬的 baseband 通道響應資訊（CIR / CFR）  
 
-你已經從 PathSolver 得到 propagation paths，接下來的目標是：  
+你已經從 PathSolver 得到`paths`，接下來的目標是：  
 * `paths.cir`: 模擬 channel impulse response（連續時間 baseband）
 * `paths.taps`	: 離散化後的 CIR（可對應 OFDM tap）
 * `paths.cfr`: 頻域通道響應（例如 OFDM subcarrier 頻率響應）
 
+### 補充說明
+如果前面用PathSolver 求得的路徑變數命名為 `ppaatthh`
+
+```python
+ppaatthh = p_solver(scene=scene, ...)
+```
+
+那麼你後續要使用 通道相關的計算函數，就直接呼叫:  
+* `ppaatthh.cir()`
+* `ppaatthh.cfr()`
+* `ppaatthh.taps()`
+
+其他名稱同理
+
 ***
-### 1. 產生 CIR（Continuous-Time, Baseband-Equivalent）
+## `路徑名稱.cir`範例
+### 1. 將 CIR 的值賦予到 a, tau
 
 ```python
 a, tau = paths.cir(normalize_delays=True, out_type="numpy")
@@ -304,3 +320,160 @@ Shape of tau:  (1, 2, 1, 1, 20)
 * 輸出：
     * `a`： `每個 path 的複數振幅（包含衰減、相位、極化等）
     * `tau`： 每個 path 的時延（以秒為單位）
+
+### 2. 針對某個(tx_ant,rx_ant)的組合，把他們每一條path 對應的 a, tau 印出來
+```python
+t = tau[0,0,0,0,:]/1e-9 # Scale to ns
+a_abs = np.abs(a)[0,0,0,0,:,0]
+a_max = np.max(a_abs)
+
+# And plot the CIR
+plt.figure()
+plt.title("Channel impulse response")
+plt.stem(t, a_abs)
+plt.xlabel(r"$\tau$ [ns]")
+plt.ylabel(r"$|a|$");
+```
+
+* `tau[0,0,0,0,:]`: 擷取第 1 個 Rx antenna 與第 1 個 Tx antenna 的所有 path delay
+* `np.abs(a)[0,0,0,0,:,0]`: 擷取第 1 個 Rx antenna 與第 1 個 Tx antenna的第 1 個 time step的所有 path magnitude
+*  `a_max = np.max(a_abs)`: 計算最大振福
+
+<img width="615" height="457" alt="image" src="https://github.com/user-attachments/assets/e31daafc-d36a-49d3-bc90-575a4536dcf7" />  
+
+***
+## `路徑名稱.cfr()`範例
+### 1. 設定 OFDM 系統參數
+
+```python
+# OFDM system parameters
+num_subcarriers = 1024
+subcarrier_spacing=30e3
+
+# Compute frequencies of subcarriers relative to the carrier frequency
+frequencies = subcarrier_frequencies(num_subcarriers, subcarrier_spacing)
+```
+* `subcarrier_frequencies(num_subcarriers, subcarrier_spacing)`: 根據「subcarrier數量」、「subcarrier spacing」，來產生每個子載波的頻率
+    * 輸出為 shape: `(1024,)` 的實數 array
+    * 結果會對稱分佈在 `[-15.36 MHz, ..., 0, ..., +15.36 MHz]`
+ 
+### 2. 計算 Channel Frequency Response（CFR）
+
+```python
+h_freq = paths.cfr(
+    frequencies=frequencies,
+    normalize=True,
+    normalize_delays=True,
+    out_type="numpy"
+)
+
+print("Shape of h_freq: ", h_freq.shape)
+# Shape: [num_rx, num_rx_ant, num_tx, num_tx_ant, num_time_steps, num_subcarriers]
+# Output: (1, 2, 1, 1, 1, 1024)
+
+```
+根據先前 ray tracing 產生的路徑 `path`，以及上面設定的 OFDM 參數，求對應的 CFR
+
+### 3. 畫 CFR 幅度圖
+```python
+# Plot absolute value
+plt.figure()
+plt.plot(np.abs(h_freq)[0,0,0,0,0,:]);
+plt.xlabel("Subcarrier index");
+plt.ylabel(r"|$h_\text{freq}$|");
+plt.title("Channel frequency response");
+```
+<img width="572" height="455" alt="image" src="https://github.com/user-attachments/assets/12e5ec48-5911-4155-8caa-912d2c6b21f2" />
+
+***
+## `路徑名稱.tap()`範例
+### 為什麼需要 channel taps？
+
+通道 taps 是從連續時間 CIR 轉為離散時間域 impulse response $h[\ell]$:  
+
+$$
+\sum_k a_k \cdot \delta(t - \tau_k)
+$$
+
+這表示「每條 path 都貢獻一個以 $tau_{k}$ 為中心的 sinc 函數」:  
+
+$$
+h[\ell] = \sum_k a_k \cdot \text{sinc}\left( \frac{\ell - \tau_k / T_s}{1} \right)
+$$
+
+
+因為 sinc 函數的時間響應是無限長的，所以在計算 taps 時，**必須選擇一段有限的區間去截斷 sinc，加總僅保留感興趣的部分。
+
+---
+
+### 1. 計算 channel taps
+
+```python
+taps = paths.taps(
+    bandwidth=100e6,       # 低通濾波器頻寬 100 MHz
+    l_min=-6,              # tap index 起始點
+    l_max=100,             # tap index 結束點
+    sampling_frequency=None,  # 預設為 Nyquist rate = 1 / bandwidth
+    normalize=True,        # 能量正規化
+    normalize_delays=True, # 最早 path delay = 0
+    out_type="numpy"
+)
+
+# Output shape
+# [num_rx, num_rx_ant, num_tx, num_tx_ant, num_time_steps, num_taps]
+print(taps.shape)  # (1, 2, 1, 1, 1, 107)
+```
+
+### 2. 畫 CIR tap 圖
+
+```python
+# 畫圖
+plt.figure()
+plt.stem(np.arange(-6, 101), np.abs(taps)[0,0,0,0,0]);
+plt.xlabel(r"Tap index $\ell$");
+plt.ylabel(r"|$h[\ell]|$");
+plt.title("Discrete channel taps");
+```
+
+<img width="571" height="459" alt="image" src="https://github.com/user-attachments/assets/a8d47912-904c-471c-82bb-a039bfa48d62" />
+
+***
+
+## Radio Map
+
+### 什麼是 Radio Map?
+Radio Map = 空間平面 (𝑥,𝑦) 上每個點的「接收品質量測值」，常用於：  
+* 基地台選址
+* Beam coverage 分析
+* RIS 調整
+* 環境感知（Radio Environment Map）
+
+More information about radio maps can be found in the detailed Tutorial on [Radio Maps](https://nvlabs.github.io/sionna/rt/tutorials/Radio-Maps.html)
+### 如何產生 Radio Map? 使用 `RadioMapSolver`
+
+### 1. 建立一個 `RadioMapSolver` 實例
+```python
+rm_solver = RadioMapSolver()
+```
+
+### 2. 呼叫求解器，並輸入要解的地圖
+
+```python
+rm = rm_solver(
+    scene=scene,
+    max_depth=5,
+    cell_size=[1, 1],         # 每個像素的解析度（單位：公尺）
+    samples_per_tx=10**6      # 每個發射器要模擬的射線數量（控制精度與時間）
+)
+
+```
+
+### 3. 顯示 Radio Map（靜態圖 or 互動視窗）
+
+```python
+if no_preview:
+    scene.render(camera=my_cam, radio_map=rm)
+else:
+    scene.preview(radio_map=rm)
+```
+<img width="766" height="590" alt="image" src="https://github.com/user-attachments/assets/44df0d9b-40ee-4ef1-9330-3d033846a2c6" />
