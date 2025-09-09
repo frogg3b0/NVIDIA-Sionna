@@ -75,6 +75,15 @@
 1. 匯入OpenStreetMap地圖
     * 因為 OpenStreetMap 的物件可能不包含地面資訊，所以需要自己生成地面物件
     * 可以根據[這份影片](https://www.youtube.com/watch?v=7xHLDxUaQ7c)參考其他設定，像是根據 [NVIDIA Sionna官網](https://nvlabs.github.io/sionna/rt/api/radio_materials.html) 設定建築物材質等
+
+1-1. 在場景內加入地平面
+<img width="744" height="422" alt="image" src="https://github.com/user-attachments/assets/ea485f81-9747-48ff-9244-ce393f35cc64" />  
+* 此時加入的地板大小為2x2的正方形，後續還須對它進行縮放  
+
+1-2. 縮放地板大小，以覆蓋整張地圖
+<img width="1983" height="972" alt="image" src="https://github.com/user-attachments/assets/e7430b5f-62b5-4f04-80c5-acde1b4320bf" />
+* 在右側部分調整(x,y,z)縮放大小
+
     * 設定完後點選 File -> Export -> Mitsuba -> Mitsuba Export
 2. 看見資料夾有 <檔名>.xml 和 meshes 就代表輸出完成
     * 之後使用需要讓xml檔和meshes資料夾在同一個路徑，路徑如下
