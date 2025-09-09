@@ -57,16 +57,19 @@
 * 之後會進到地圖頁面，把地圖移動到自己想要的範圍 (e.g. 交大工程四館)
 * 然後按下Show selection rectangle
 * 確認範圍後按下Copy，電腦就會複製指定範圍的GPS座標
-<img width="1180" height="828" alt="image" src="https://github.com/user-attachments/assets/2ba40638-3471-41fd-9954-7dbb11365387" />
+<img width="1318" height="973" alt="image" src="https://github.com/user-attachments/assets/fea2ede8-ea82-4146-9054-4deb31f6526c" />
+
 
 * 回到Blender，按照下圖1~3的順序操作
     1. 按下paste貼上GPS資訊
     2. 確認資料源是 "OpenStreetMap"
     3. 按下 "import" 方能導入地圖資訊
-<img width="1611" height="806" alt="image" src="https://github.com/user-attachments/assets/fc8fd367-8c1d-48f5-a268-eb6c0fd11768" />
+<img width="1919" height="1053" alt="image" src="https://github.com/user-attachments/assets/2c49081d-f996-493b-8c84-8a93d5d6d73d" />
+
 
 * 導入地圖後如下所示 (此份教學以交大光復校區為例子)
-<img width="1103" height="596" alt="image" src="https://github.com/user-attachments/assets/b567cf8a-bb07-464c-a22f-6c046c68c2b0" />
+<img width="1919" height="1053" alt="image" src="https://github.com/user-attachments/assets/6b6a88c2-fd44-473a-a605-351dd94f0873" />
+
 
 ### 2. 使用教學
 1. 匯入OpenStreetMap地圖
@@ -84,5 +87,19 @@ folder
 　 ├── object3.ply  
 　 └── ⋮   
   
- 
+ ## 如何匯入到 Sionna 做使用
+現在我們已經有一份 `.xml`檔(地圖檔)，以及數份的`.ply`檔案，接下來會示範如何將此份地圖匯入到 Sionna 做使用
+
+```python
+scene_path="my_scene/nycu_campus/nycu_campus.xml"
+scene = load_scene(
+    filename="/home/wicoms5090/sionna_env/NYCU ED/NYCU ED.xml",  
+    merge_shapes=True                           
+)
+
+print(f"size of the scene: {scene.size}")
+scene.preview()
+```
+
+
 
