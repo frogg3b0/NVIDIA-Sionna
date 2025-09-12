@@ -117,8 +117,7 @@ else:
 
 ### 2-1. 根據 ITU 規範建立金屬車輛的材質
 ```python
-num_car
-s = 10
+num_cars = 10
 car_material = ITURadioMaterial("car-material",
                                 "metal",
                                 thickness=0.01,
