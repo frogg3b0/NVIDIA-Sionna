@@ -126,6 +126,11 @@ car_material = ITURadioMaterial("car-material",
 
 ### 2-2. 使用 `SceneObject` 建立多個車輛物件並加入場景
 ```python
+# 先刪除同名的車輛（若存在）
+existing_cars = [f"car-{i}" for i in range(num_cars)]
+scene.edit(remove=existing_cars)
+
+# 再將車輛加入到場景內
 cars = [SceneObject(fname=sionna.rt.scene.low_poly_car, # Simple mesh of a car
                     name=f"car-{i}",
                     radio_material=car_material)
